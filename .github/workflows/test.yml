@@ -1,23 +1,101 @@
-name: Testing Setup-Java with 386 architecture
+name: Testing Setup-Java with Multiple Architectures (386/x86/x64/amd64)
+
 on: [push, pull_request, workflow_dispatch]
 
 jobs:
-  test-386:
+  test-java-x86:
     runs-on: windows-latest
+    name: "Setup Java with x86 architecture"
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
 
-      - name: Set up JDK 17 for 386 architecture
+      - name: Setup Java 17 with x86 architecture
+        id: setup-java-x86
         uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
           java-version: '17'
           architecture: 'x86'
+          cache: 'maven'
       
-      - name: Verify Java installation and cache
+      - name: Display Java installation and system info (x86)
         run: |
+          echo "=== Java Version ==="
           java -version
-          echo "Cache key: ${{ steps.cache-java.outputs.cache-hit }}"
+          echo ""
+          echo "=== System Architecture Information ==="
+          echo "RUNNER_OS: ${{ runner.os }}"
+          echo "PROCESSOR_ARCHITECTURE: ${{ env.PROCESSOR_ARCHITECTURE }}"
+          echo "PROCESSOR_ARCHITEW6432: ${{ env.PROCESSOR_ARCHITEW6432 }}"
+          echo ""
+          echo "=== Java Path ==="
+          where java
+          echo ""
+          echo "=== Cache Information ==="
+          echo "Cache hit (x86): ${{ steps.setup-java-x86.outputs.cache-hit }}"
 
+  test-java-x64:
+    runs-on: windows-latest
+    name: "Setup Java with x64 architecture"
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Setup Java 17 with x64 architecture
+        id: setup-java-x64
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          architecture: 'x64'
+          cache: 'maven'
       
+      - name: Display Java installation and system info (x64)
+        run: |
+          echo "=== Java Version ==="
+          java -version
+          echo ""
+          echo "=== System Architecture Information ==="
+          echo "RUNNER_OS: ${{ runner.os }}"
+          echo "PROCESSOR_ARCHITECTURE: ${{ env.PROCESSOR_ARCHITECTURE }}"
+          echo "PROCESSOR_ARCHITEW6432: ${{ env.PROCESSOR_ARCHITEW6432 }}"
+          echo ""
+          echo "=== Java Path ==="
+          where java
+          echo ""
+          echo "=== Cache Information ==="
+          echo "Cache hit (x64): ${{ steps.setup-java-x64.outputs.cache-hit }}"
+
+  test-java-amd64:
+    runs-on: windows-latest
+    name: "Setup Java with amd64 architecture"
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Setup Java 17 with amd64 architecture
+        id: setup-java-amd64
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          architecture: 'amd64'
+          cache: 'maven'
+      
+      - name: Display Java installation and system info (amd64)
+        run: |
+          echo "=== Java Version ==="
+          java -version
+          echo ""
+          echo "=== System Architecture Information ==="
+          echo "RUNNER_OS: ${{ runner.os }}"
+          echo "PROCESSOR_ARCHITECTURE: ${{ env.PROCESSOR_ARCHITECTURE }}"
+          echo "PROCESSOR_ARCHITEW6432: ${{ env.PROCESSOR_ARCHITEW6432 }}"
+          echo ""
+          echo "=== Java Path ==="
+          where java
+          echo ""
+          echo "=== Cache Information ==="
+          echo "Cache hit (amd64): ${{ steps.setup-java-amd64.outputs.cache-hit }}"
+
