@@ -1,0 +1,23 @@
+name: Testing Setup-Java with 386 architecture
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  test-386:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Set up JDK 17 for 386 architecture
+        uses: actions/setup-java@v6
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          architecture: 'x86'
+      
+      - name: Verify Java installation and cache
+        run: |
+          java -version
+          echo "Cache key: ${{ steps.cache-java.outputs.cache-hit }}"
+
+      
