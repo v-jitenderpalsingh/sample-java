@@ -1,6 +1,6 @@
 name: Testing Setup-Java with Multiple Architectures (386/x86/x64/amd64)
 
-on: [push, pull_request, workflow_dispatch]
+on: [workflow_dispatch]
 
 jobs:
   test-java-x86:
